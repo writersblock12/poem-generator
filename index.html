@@ -4,68 +4,75 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Your Poem</title>
-
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: "Segoe UI", sans-serif;
     }
 
     body {
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-
-      /* 🔥 aesthetic background */
-      background: linear-gradient(135deg, #141e30, #243b55);
+      background: linear-gradient(135deg, #1f2937, #374151, #111827);
+      font-family: Georgia, serif;
+      padding: 24px;
     }
 
     .container {
+      width: min(92vw, 760px);
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      padding: 28px;
       text-align: center;
-      padding: 25px;
-
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(12px);
-
-      border-radius: 16px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-
-      width: 90%;
-      max-width: 500px;
     }
 
     h1 {
-      color: #ffffff;
+      color: white;
+      font-size: 2.2rem;
       margin-bottom: 20px;
-      font-weight: 500;
-      letter-spacing: 1px;
+      font-weight: 600;
+    }
+
+    .image-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 420px;
     }
 
     img {
-      width: 100%;
+      max-width: 100%;
+      max-height: 75vh;
+      object-fit: contain;
       border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-
-      opacity: 0;
-      transform: scale(0.95);
-      transition: all 0.6s ease;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.28);
+      background: white;
+      display: none;
     }
 
-    img.show {
-      opacity: 1;
-      transform: scale(1);
+    .error {
+      display: none;
+      color: #ffd4d4;
+      background: rgba(120, 0, 0, 0.35);
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-size: 0.98rem;
+      line-height: 1.5;
     }
   </style>
 </head>
-
 <body>
-
   <div class="container">
     <h1>Your Poem</h1>
-    <img id="poemImage" />
+    <div class="image-wrap">
+      <img id="poemImage" alt="Random poem" />
+      <div id="errorBox" class="error"></div>
+    </div>
   </div>
 
   <script>
@@ -79,19 +86,25 @@
       "Ellen Bass.jpg"
     ];
 
-    function loadPoem() {
-      const random = Math.floor(Math.random() * poems.length);
-      const img = document.getElementById("poemImage");
+    const randomIndex = Math.floor(Math.random() * poems.length);
+    const selectedPoem = poems[randomIndex];
 
-      img.src = poems[random];
+    const img = document.getElementById("poemImage");
+    const errorBox = document.getElementById("errorBox");
 
-      img.onload = () => {
-        img.classList.add("show");
-      };
-    }
+    img.src = encodeURI(selectedPoem);
 
-    loadPoem();
+    img.onload = function () {
+      img.style.display = "block";
+    };
+
+    img.onerror = function () {
+      errorBox.style.display = "block";
+      errorBox.innerHTML =
+        "Image could not be loaded.<br><br>" +
+        "Tried file: <strong>" + selectedPoem + "</strong><br><br>" +
+        "Check that the file name in GitHub matches this exactly.";
+    };
   </script>
-
 </body>
 </html>
