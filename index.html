@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Poem</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #f5f3ee;
+      padding: 40px;
+    }
+
+    img {
+      max-width: 90%;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Your Poem</h1>
+  <img id="poem">
+
+  <script>
+    const poems = [
+      "Clint Smith poem.jpg",
+      "Ellen Bass.jpg",
+      "There Will Come Soft Rains.jpg",
+      "download(50).jpg",
+      "download(51).jpg"
+      "download(52).jpg"
+      "download(53).jpg"
+    ];
+
+    const random = Math.floor(Math.random() * poems.length);
+    document.getElementById("poem").src = poems[random];
+  </script>
+
+</body>
+</html>
